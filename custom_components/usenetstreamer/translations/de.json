@@ -1,0 +1,41 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "ssl": "SSL verwenden",
+          "admin_token": "Admin-Token",
+          "verify_ssl": "SSL-Zertifikat prüfen"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Verbindung fehlgeschlagen",
+      "invalid_auth": "Ungültiges Admin-Token"
+    },
+    "abort": {
+      "already_configured": "Diese UsenetStreamer-Instanz ist bereits konfiguriert"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": { "scan_interval": "Aktualisierungsintervall (Sekunden)" }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "addon_version": { "name": "Addon-Version" },
+      "indexer_manager": { "name": "Indexer-Manager" },
+      "configured_indexers": { "name": "Konfigurierte Indexer" }
+    },
+    "binary_sensor": {
+      "reachable": { "name": "Erreichbar" },
+      "easynews_enabled": { "name": "Easynews aktiviert" },
+      "healthcheck_enabled": { "name": "Health-Check aktiviert" }
+    }
+  }
+}

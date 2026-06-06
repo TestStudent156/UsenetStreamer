@@ -1,0 +1,41 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "data": {
+          "host": "Host",
+          "port": "Port",
+          "ssl": "Use SSL",
+          "admin_token": "Admin token",
+          "verify_ssl": "Verify SSL certificate"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect",
+      "invalid_auth": "Invalid admin token"
+    },
+    "abort": {
+      "already_configured": "This UsenetStreamer instance is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "data": { "scan_interval": "Update interval (seconds)" }
+      }
+    }
+  },
+  "entity": {
+    "sensor": {
+      "addon_version": { "name": "Addon version" },
+      "indexer_manager": { "name": "Indexer manager" },
+      "configured_indexers": { "name": "Configured indexers" }
+    },
+    "binary_sensor": {
+      "reachable": { "name": "Reachable" },
+      "easynews_enabled": { "name": "Easynews enabled" },
+      "healthcheck_enabled": { "name": "Health-check enabled" }
+    }
+  }
+}
