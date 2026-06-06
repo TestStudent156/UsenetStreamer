@@ -39,3 +39,7 @@ class UsenetStreamerCoordinator(DataUpdateCoordinator[dict[str, Any]]):
             return await self._client.async_get_data()
         except UsenetStreamerError as err:
             raise UpdateFailed(str(err)) from err
+
+    async def async_set_config(self, values: dict[str, Any]) -> dict[str, Any]:
+        """Apply config values through the admin API."""
+        return await self._client.async_set_config(values)

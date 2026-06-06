@@ -1,6 +1,6 @@
 # UsenetStreamer for Home Assistant
 
-Read-only monitoring of a
+Monitoring and remote configuration of a
 [UsenetStreamer](https://github.com/Sanket9225/UsenetStreamer) instance via its
 admin API.
 
@@ -29,3 +29,13 @@ health-check-enabled, and reachable binary sensors.
 
 > Note: UsenetStreamer exposes no live download/stream metrics, so monitoring
 > is limited to availability, version, and configuration.
+
+## Service: apply_config
+
+Use `usenetstreamer.apply_config` to push config values to an existing
+UsenetStreamer config entry.
+
+Service data:
+
+- `entry_id`: target integration entry ID
+- `values`: key/value mapping sent to `/admin/api/config` as `{"values": ...}`

@@ -52,5 +52,21 @@ class UsenetStreamerClient:
             raise CannotConnect
         return await resp.json(content_type=None)
 
+    async def async_set_config(self, values: dict[str, Any]) -> dict[str, Any]:
+        try:
+            async with asyncio.timeout(15):
+                resp = await self._session.post(
+                    self._config_url,
+                    headers=self._headers,
+                    json={"values": values},
+                )
+        except (TimeoutError, aiohttp.ClientError) as err:
+            raise CannotConnect from err
+        if resp.status in (401, 403):
+            raise InvalidAuth
+        if resp.status >= 400:
+            raise CannotConnect
+        return await resp.json(content_type=None)
+
     async def async_validate(self) -> None:
         await self.async_get_data()

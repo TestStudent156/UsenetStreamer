@@ -49,3 +49,18 @@ async def test_cannot_connect_raises(client):
               exception=TimeoutError())
         with pytest.raises(CannotConnect):
             await client.async_validate()
+
+
+async def test_set_config_success(client):
+    url = "http://1.2.3.4:7000/admin/api/config"
+    with aioresponses() as m:
+        m.post(url, payload={"success": True})
+        data = await client.async_set_config({"EASYNEWS_ENABLED": "true"})
+    assert data["success"] is True
+
+
+async def test_set_config_invalid_auth(client):
+    with aioresponses() as m:
+        m.post("http://1.2.3.4:7000/admin/api/config", status=403)
+        with pytest.raises(InvalidAuth):
+            await client.async_set_config({"INDEXER_MANAGER": "prowlarr"})

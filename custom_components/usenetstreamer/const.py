@@ -9,6 +9,7 @@ CONF_SSL = "ssl"
 CONF_ADMIN_TOKEN = "admin_token"
 CONF_VERIFY_SSL = "verify_ssl"
 CONF_SCAN_INTERVAL = "scan_interval"
+ATTR_VALUES = "values"
 
 DEFAULT_PORT = 7000
 DEFAULT_SSL = False
