@@ -1,17 +1,19 @@
 """The UsenetStreamer integration."""
 from __future__ import annotations
 
+from functools import partial
 from typing import Any
 
 from homeassistant.config_entries import ConfigEntry
-from homeassistant.const import CONF_ENTRY_ID, Platform
-from homeassistant.core import HomeAssistant
+from homeassistant.const import Platform
+from homeassistant.core import HomeAssistant, ServiceCall
 from homeassistant.exceptions import HomeAssistantError
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
 
 from .api import UsenetStreamerClient
 from .const import (
+    ATTR_ENTRY_ID,
     ATTR_VALUES,
     CONF_ADMIN_TOKEN,
     CONF_HOST,
@@ -28,7 +30,7 @@ PLATFORMS = [Platform.BINARY_SENSOR, Platform.SENSOR]
 SERVICE_APPLY_CONFIG = "apply_config"
 SERVICE_SCHEMA_APPLY_CONFIG = vol.Schema(
     {
-        vol.Required(CONF_ENTRY_ID): cv.string,
+        vol.Required(ATTR_ENTRY_ID): cv.string,
         vol.Required(ATTR_VALUES): dict,
     }
 )
@@ -43,7 +45,7 @@ async def async_setup_entry(
         hass.services.async_register(
             DOMAIN,
             SERVICE_APPLY_CONFIG,
-            lambda call: _async_handle_apply_config(hass, call.data),
+            partial(_async_handle_apply_config, hass),
             schema=SERVICE_SCHEMA_APPLY_CONFIG,
         )
 
@@ -80,9 +82,10 @@ async def async_unload_entry(
 
 
 async def _async_handle_apply_config(
-    hass: HomeAssistant, data: dict[str, Any]
+    hass: HomeAssistant, call: ServiceCall
 ) -> None:
-    entry_id = data[CONF_ENTRY_ID]
+    data: dict[str, Any] = call.data
+    entry_id = data[ATTR_ENTRY_ID]
     values = data[ATTR_VALUES]
 
     entry = hass.config_entries.async_get_entry(entry_id)

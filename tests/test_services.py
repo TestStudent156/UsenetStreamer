@@ -47,11 +47,11 @@ async def test_apply_config_service_calls_client(hass: HomeAssistant) -> None:
         await hass.services.async_call(
             DOMAIN,
             "apply_config",
-            {"entry_id": entry.entry_id, "values": {"EASYNEWS_ENABLED": "true"}},
+            {"entry_id": entry.entry_id, "values": {"EASYNEWS_ENABLED": True}},
             blocking=True,
         )
 
-    set_config.assert_awaited_once_with({"EASYNEWS_ENABLED": "true"})
+    set_config.assert_awaited_once_with({"EASYNEWS_ENABLED": True})
 
 
 async def test_apply_config_service_invalid_entry(hass: HomeAssistant) -> None:
@@ -59,6 +59,6 @@ async def test_apply_config_service_invalid_entry(hass: HomeAssistant) -> None:
         await hass.services.async_call(
             DOMAIN,
             "apply_config",
-            {"entry_id": "missing", "values": {"EASYNEWS_ENABLED": "true"}},
+            {"entry_id": "missing", "values": {"EASYNEWS_ENABLED": True}},
             blocking=True,
         )
