@@ -1,6 +1,7 @@
 """Tests for the UsenetStreamer API client."""
 from __future__ import annotations
 
+import aiohttp
 import pytest
 from aioresponses import aioresponses
 
@@ -12,7 +13,7 @@ from custom_components.usenetstreamer.api import (
 
 
 @pytest.fixture
-def client(hass):
+async def client(hass):
     return UsenetStreamerClient(
         hass=hass, host="1.2.3.4", port=7000, ssl=False,
         admin_token="TOK", verify_ssl=True,
