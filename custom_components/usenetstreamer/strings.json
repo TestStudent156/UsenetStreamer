@@ -1,22 +1,24 @@
 {
   "config": {
     "step": {
-      "user": {
+      "configure_addon": {
+        "title": "Configure the UsenetStreamer add-on",
+        "description": "Set the admin shared secret that protects the UsenetStreamer admin API. Keep it safe — you can reuse it to open the add-on's admin dashboard.",
         "data": {
-          "host": "Host",
-          "port": "Port",
-          "ssl": "Use SSL",
-          "admin_token": "Admin token",
-          "verify_ssl": "Verify SSL certificate"
+          "shared_secret": "Admin shared secret"
         }
       }
     },
-    "error": {
-      "cannot_connect": "Failed to connect",
-      "invalid_auth": "Invalid admin token"
+    "progress": {
+      "install_addon": "Installing the UsenetStreamer add-on. This may take a few minutes.",
+      "start_addon": "Starting the UsenetStreamer add-on."
     },
     "abort": {
-      "already_configured": "This UsenetStreamer instance is already configured"
+      "not_hassio": "The UsenetStreamer integration requires Home Assistant OS or a Supervised installation so it can install and manage the add-on.",
+      "already_configured": "UsenetStreamer is already configured",
+      "addon_info_failed": "Failed to get information about the UsenetStreamer add-on.",
+      "addon_install_failed": "Failed to install the UsenetStreamer add-on.",
+      "addon_start_failed": "Failed to start the UsenetStreamer add-on."
     }
   },
   "options": {

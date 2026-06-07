@@ -1,22 +1,24 @@
 {
   "config": {
     "step": {
-      "user": {
+      "configure_addon": {
+        "title": "UsenetStreamer-Add-on konfigurieren",
+        "description": "Lege das geteilte Admin-Geheimnis fest, das die UsenetStreamer-Admin-API schützt. Bewahre es sicher auf — du kannst es zum Öffnen des Admin-Dashboards des Add-ons wiederverwenden.",
         "data": {
-          "host": "Host",
-          "port": "Port",
-          "ssl": "SSL verwenden",
-          "admin_token": "Admin-Token",
-          "verify_ssl": "SSL-Zertifikat prüfen"
+          "shared_secret": "Geteiltes Admin-Geheimnis"
         }
       }
     },
-    "error": {
-      "cannot_connect": "Verbindung fehlgeschlagen",
-      "invalid_auth": "Ungültiges Admin-Token"
+    "progress": {
+      "install_addon": "Das UsenetStreamer-Add-on wird installiert. Das kann einige Minuten dauern.",
+      "start_addon": "Das UsenetStreamer-Add-on wird gestartet."
     },
     "abort": {
-      "already_configured": "Diese UsenetStreamer-Instanz ist bereits konfiguriert"
+      "not_hassio": "Die UsenetStreamer-Integration benötigt Home Assistant OS oder eine Supervised-Installation, um das Add-on installieren und verwalten zu können.",
+      "already_configured": "UsenetStreamer ist bereits konfiguriert",
+      "addon_info_failed": "Informationen zum UsenetStreamer-Add-on konnten nicht abgerufen werden.",
+      "addon_install_failed": "Das UsenetStreamer-Add-on konnte nicht installiert werden.",
+      "addon_start_failed": "Das UsenetStreamer-Add-on konnte nicht gestartet werden."
     }
   },
   "options": {

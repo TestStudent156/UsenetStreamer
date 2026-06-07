@@ -1,6 +1,7 @@
 {
   "domain": "usenetstreamer",
   "name": "UsenetStreamer",
+  "after_dependencies": ["hassio"],
   "codeowners": ["@TestStudent156"],
   "config_flow": true,
   "documentation": "https://github.com/TestStudent156/hass-usenetstreamer",

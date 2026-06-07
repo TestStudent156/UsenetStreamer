@@ -2,8 +2,10 @@
 from __future__ import annotations
 
 from functools import partial
+import logging
 from typing import Any
 
+from homeassistant.components.hassio import AddonError
 from homeassistant.config_entries import ConfigEntry
 from homeassistant.const import Platform
 from homeassistant.core import HomeAssistant, ServiceCall
@@ -11,20 +13,25 @@ from homeassistant.exceptions import HomeAssistantError
 import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
 
+from . import addon
 from .api import UsenetStreamerClient
 from .const import (
     ATTR_ENTRY_ID,
     ATTR_VALUES,
     CONF_ADMIN_TOKEN,
     CONF_HOST,
+    CONF_INTEGRATION_CREATED_ADDON,
     CONF_PORT,
     CONF_SCAN_INTERVAL,
     CONF_SSL,
+    CONF_USE_ADDON,
     CONF_VERIFY_SSL,
     DEFAULT_SCAN_INTERVAL,
     DOMAIN,
 )
 from .coordinator import UsenetStreamerCoordinator
+
+_LOGGER = logging.getLogger(__name__)
 
 PLATFORMS = [Platform.BINARY_SENSOR, Platform.SENSOR]
 SERVICE_APPLY_CONFIG = "apply_config"
@@ -41,6 +48,9 @@ type UsenetStreamerConfigEntry = ConfigEntry[UsenetStreamerCoordinator]
 async def async_setup_entry(
     hass: HomeAssistant, entry: UsenetStreamerConfigEntry
 ) -> bool:
+    if entry.data.get(CONF_USE_ADDON):
+        await addon.async_ensure_addon_running(hass)
+
     if not hass.services.has_service(DOMAIN, SERVICE_APPLY_CONFIG):
         hass.services.async_register(
             DOMAIN,
@@ -78,7 +88,25 @@ async def async_unload_entry(
     unload_ok = await hass.config_entries.async_unload_platforms(entry, PLATFORMS)
     if unload_ok and not hass.config_entries.async_entries(DOMAIN):
         hass.services.async_remove(DOMAIN, SERVICE_APPLY_CONFIG)
+    if unload_ok and entry.data.get(CONF_USE_ADDON) and entry.disabled_by:
+        try:
+            await addon.get_addon_manager(hass).async_stop_addon()
+        except AddonError as err:
+            _LOGGER.error("Failed to stop UsenetStreamer add-on: %s", err)
+            return False
     return unload_ok
+
+
+async def async_remove_entry(
+    hass: HomeAssistant, entry: UsenetStreamerConfigEntry
+) -> None:
+    """Uninstall the add-on if this integration installed it."""
+    if not entry.data.get(CONF_INTEGRATION_CREATED_ADDON):
+        return
+    try:
+        await addon.get_addon_manager(hass).async_uninstall_addon()
+    except AddonError as err:
+        _LOGGER.error("Failed to uninstall UsenetStreamer add-on: %s", err)
 
 
 async def _async_handle_apply_config(

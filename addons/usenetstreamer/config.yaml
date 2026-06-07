@@ -1,0 +1,26 @@
+name: UsenetStreamer
+version: "0.1.0"
+slug: usenetstreamer
+description: Run UsenetStreamer (Usenet → Stremio) as a Home Assistant add-on.
+url: https://github.com/TestStudent156/hass-usenetstreamer
+arch:
+  - amd64
+  - aarch64
+startup: application
+boot: auto
+init: true
+ports:
+  "7000/tcp": 7000
+ports_description:
+  "7000/tcp": UsenetStreamer web UI + admin API
+webui: "http://[HOST]:[PORT:7000]/"
+watchdog: "tcp://[HOST]:[PORT:7000]"
+panel_icon: mdi:download-network
+options:
+  shared_secret: ""
+  stream_token: ""
+  base_url: ""
+schema:
+  shared_secret: password
+  stream_token: "password?"
+  base_url: "url?"
