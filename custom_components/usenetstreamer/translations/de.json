@@ -34,6 +34,22 @@
       }
     }
   },
+  "services": {
+    "apply_config": {
+      "name": "Konfiguration anwenden",
+      "description": "UsenetStreamer-Konfigurationswerte über die Admin-API anwenden.",
+      "fields": {
+        "entry_id": {
+          "name": "Config-Entry-ID",
+          "description": "Die UsenetStreamer-Config-Entry-ID, die aktualisiert werden soll."
+        },
+        "values": {
+          "name": "Konfigurationswerte",
+          "description": "Zuordnung von UsenetStreamer-Konfigurationsschlüsseln und -werten zum Speichern."
+        }
+      }
+    }
+  },
   "entity": {
     "sensor": {
       "addon_version": { "name": "Addon-Version" },

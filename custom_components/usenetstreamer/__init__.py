@@ -14,6 +14,7 @@ import homeassistant.helpers.config_validation as cv
 import voluptuous as vol
 
 from . import addon
+from . import config_flow  # noqa: F401 - preload to avoid event loop import_module warning
 from .api import UsenetStreamerClient
 from .const import (
     ATTR_ENTRY_ID,

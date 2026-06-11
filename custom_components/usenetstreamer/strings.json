@@ -34,6 +34,22 @@
       }
     }
   },
+  "services": {
+    "apply_config": {
+      "name": "Apply config",
+      "description": "Apply UsenetStreamer configuration values through the admin API.",
+      "fields": {
+        "entry_id": {
+          "name": "Config entry id",
+          "description": "The UsenetStreamer config entry ID to update."
+        },
+        "values": {
+          "name": "Config values",
+          "description": "Mapping of UsenetStreamer config keys and values to save."
+        }
+      }
+    }
+  },
   "entity": {
     "sensor": {
       "addon_version": { "name": "Addon version" },
