@@ -19,6 +19,7 @@ from .const import (
     ATTR_ENTRY_ID,
     ATTR_VALUES,
     CONF_ADMIN_TOKEN,
+    CONF_DISCOVERED_SLUG,
     CONF_HOST,
     CONF_INTEGRATION_CREATED_ADDON,
     CONF_PORT,
@@ -26,6 +27,7 @@ from .const import (
     CONF_SSL,
     CONF_USE_ADDON,
     CONF_VERIFY_SSL,
+    ADDON_SLUG_LEGACY,
     DEFAULT_SCAN_INTERVAL,
     DOMAIN,
 )
@@ -49,7 +51,8 @@ async def async_setup_entry(
     hass: HomeAssistant, entry: UsenetStreamerConfigEntry
 ) -> bool:
     if entry.data.get(CONF_USE_ADDON):
-        await addon.async_ensure_addon_running(hass)
+        slug = entry.data.get(CONF_DISCOVERED_SLUG) or ADDON_SLUG_LEGACY
+        await addon.async_ensure_addon_running(hass, slug)
 
     if not hass.services.has_service(DOMAIN, SERVICE_APPLY_CONFIG):
         hass.services.async_register(
@@ -89,8 +92,9 @@ async def async_unload_entry(
     if unload_ok and not hass.config_entries.async_entries(DOMAIN):
         hass.services.async_remove(DOMAIN, SERVICE_APPLY_CONFIG)
     if unload_ok and entry.data.get(CONF_USE_ADDON) and entry.disabled_by:
+        slug = entry.data.get(CONF_DISCOVERED_SLUG) or ADDON_SLUG_LEGACY
         try:
-            await addon.get_addon_manager(hass).async_stop_addon()
+            await addon.get_addon_manager(hass, slug).async_stop_addon()
         except AddonError as err:
             _LOGGER.error("Failed to stop UsenetStreamer add-on: %s", err)
             return False
@@ -103,8 +107,9 @@ async def async_remove_entry(
     """Uninstall the add-on if this integration installed it."""
     if not entry.data.get(CONF_INTEGRATION_CREATED_ADDON):
         return
+    slug = entry.data.get(CONF_DISCOVERED_SLUG) or ADDON_SLUG_LEGACY
     try:
-        await addon.get_addon_manager(hass).async_uninstall_addon()
+        await addon.get_addon_manager(hass, slug).async_uninstall_addon()
     except AddonError as err:
         _LOGGER.error("Failed to uninstall UsenetStreamer add-on: %s", err)
 

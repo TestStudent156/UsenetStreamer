@@ -3,7 +3,7 @@
     "step": {
       "configure_addon": {
         "title": "Configure the UsenetStreamer add-on",
-        "description": "Set the admin shared secret that protects the UsenetStreamer admin API. Keep it safe — you can reuse it to open the add-on's admin dashboard.",
+        "description": "Set the admin shared secret that protects the UsenetStreamer admin API. Keep it safe — you can reuse it to open the add-on's admin dashboard. The integration preserves any other options (stream token, base URL) you have set in the Supervisor UI.",
         "data": {
           "shared_secret": "Admin shared secret"
         }
@@ -18,7 +18,13 @@
       "already_configured": "UsenetStreamer is already configured",
       "addon_info_failed": "Failed to get information about the UsenetStreamer add-on.",
       "addon_install_failed": "Failed to install the UsenetStreamer add-on.",
-      "addon_start_failed": "Failed to start the UsenetStreamer add-on."
+      "addon_start_failed": "Failed to start the UsenetStreamer add-on.",
+      "addon_not_found": "The UsenetStreamer add-on was not found in the Supervisor store. Install it (via the Add-on Store, the Samba share, or a Git repository) and try again.",
+      "addon_validation_failed": "The add-on is installed but the integration could not reach the admin API. Check the Supervisor add-on log for the UsenetStreamer add-on — the most common cause is an empty admin shared secret or the add-on not yet listening on port 7000.",
+      "invalid_auth": "The UsenetStreamer add-on rejected the configured shared secret. Re-run the add-on configuration and make sure the values match."
+    },
+    "error": {
+      "addon_options_write_failed": "Could not save the add-on options. Check the Supervisor log and try again."
     }
   },
   "options": {

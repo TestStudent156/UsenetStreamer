@@ -3,7 +3,7 @@
     "step": {
       "configure_addon": {
         "title": "UsenetStreamer-Add-on konfigurieren",
-        "description": "Lege das geteilte Admin-Geheimnis fest, das die UsenetStreamer-Admin-API schützt. Bewahre es sicher auf — du kannst es zum Öffnen des Admin-Dashboards des Add-ons wiederverwenden.",
+        "description": "Lege das geteilte Admin-Geheimnis fest, das die UsenetStreamer-Admin-API schützt. Bewahre es sicher auf — du kannst es zum Öffnen des Admin-Dashboards des Add-ons wiederverwenden. Die Integration lässt andere Optionen (Stream-Token, Basis-URL), die du in der Supervisor-UI gesetzt hast, unverändert.",
         "data": {
           "shared_secret": "Geteiltes Admin-Geheimnis"
         }
@@ -18,7 +18,13 @@
       "already_configured": "UsenetStreamer ist bereits konfiguriert",
       "addon_info_failed": "Informationen zum UsenetStreamer-Add-on konnten nicht abgerufen werden.",
       "addon_install_failed": "Das UsenetStreamer-Add-on konnte nicht installiert werden.",
-      "addon_start_failed": "Das UsenetStreamer-Add-on konnte nicht gestartet werden."
+      "addon_start_failed": "Das UsenetStreamer-Add-on konnte nicht gestartet werden.",
+      "addon_not_found": "Das UsenetStreamer-Add-on wurde im Supervisor-Store nicht gefunden. Installiere es (über den Add-on-Store, die Samba-Freigabe oder ein Git-Repository) und versuche es erneut.",
+      "addon_validation_failed": "Das Add-on ist installiert, aber die Integration konnte die Admin-API nicht erreichen. Prüfe das Supervisor-Add-on-Log des UsenetStreamer-Add-ons — die häufigste Ursache ist ein leeres Admin-Geheimnis oder das Add-on lauscht noch nicht auf Port 7000.",
+      "invalid_auth": "Das UsenetStreamer-Add-on hat das konfigurierte geteilte Geheimnis abgelehnt. Konfiguriere das Add-on erneut und stelle sicher, dass die Werte übereinstimmen."
+    },
+    "error": {
+      "addon_options_write_failed": "Die Add-on-Optionen konnten nicht gespeichert werden. Prüfe das Supervisor-Log und versuche es erneut."
     }
   },
   "options": {

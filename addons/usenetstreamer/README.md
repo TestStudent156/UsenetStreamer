@@ -36,3 +36,27 @@ or through the integration's `usenetstreamer.apply_config` service.
 - Persistent config is stored under `/data/config` (`runtime-env.json`).
 - The app serves plain HTTP on port 7000; Stremio needs HTTPS, so put a reverse
   proxy in front for external streaming use.
+- The container runs as the unprivileged `node` user (uid 1000) so the app's
+  own writes (npm cache, `runtime-env.json`, etc.) work without root. `/data`
+  is Supervisor-managed and may be root-owned; the entry script chowns the
+  config subtree to `node:node` on start.
+
+## Troubleshooting
+
+**Add-on won't start / `run.sh` exits silently.** Check the Supervisor
+add-on log. The wrapper now logs a one-line summary of the resolved
+options at start (e.g. `[usenetstreamer] starting on port 7000 (config
+dir: /data/config; secret: set; stream_token: empty; base_url: empty)`).
+If `secret: empty` appears, set the **Admin shared secret** in the
+Configuration tab and restart.
+
+**"Could not validate the connection" / add-on_validation_failed.** The
+add-on is up but the admin API is unreachable. Most common causes:
+empty `shared_secret` (see above), the app still starting (wait a few
+seconds and retry), or the add-on log shows an upstream crash. Read the
+add-on log via **Settings → Add-ons → UsenetStreamer → Log**.
+
+**Config flow says "add-on not found".** The Supervisor doesn't see the
+add-on. If you installed via a Git repository, check the slug under
+**Settings → Add-ons** — store-installed add-ons are slugged as
+`local_<hash>_usenetstreamer` and the integration auto-discovers them.

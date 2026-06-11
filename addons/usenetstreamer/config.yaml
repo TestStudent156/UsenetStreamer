@@ -1,5 +1,5 @@
 name: UsenetStreamer
-version: "0.1.0"
+version: "0.2.0"
 slug: usenetstreamer
 description: Run UsenetStreamer (Usenet → Stremio) as a Home Assistant add-on.
 url: https://github.com/TestStudent156/hass-usenetstreamer
